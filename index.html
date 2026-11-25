@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>张云睿 · AIGC 视觉作品集</title>
+<meta name="description" content="张云睿｜数字媒体技术 2027 届本科生。六个项目、五支短片、十九帧静帧：游戏概念 PV、品牌广告、书籍装帧与角色设定。">
+<link rel="preconnect" href="https://miaoda.feishu.cn" crossorigin>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+<link rel="alternate" href="assets/zero-film.mp4" type="video/mp4">
+<link rel="alternate" href="assets/zero-logo.mp4" type="video/mp4">
+<link rel="alternate" href="assets/zero-shot1.mp4" type="video/mp4">
+<link rel="alternate" href="assets/zero-shot2.mp4" type="video/mp4">
+<link rel="alternate" href="assets/zero-shot3.mp4" type="video/mp4">
+<link rel="alternate" href="assets/zero-shot4.mp4" type="video/mp4">
+<link rel="alternate" href="assets/milk-film.mp4" type="video/mp4">
+<link rel="alternate" href="assets/perfume-film.mp4" type="video/mp4">
+<link rel="alternate" href="assets/perfume-shot1.mp4" type="video/mp4">
+<link rel="alternate" href="assets/perfume-shot2.mp4" type="video/mp4">
+<link rel="alternate" href="assets/perfume-shot3.mp4" type="video/mp4">
+<link rel="alternate" href="assets/perfume-shot4.mp4" type="video/mp4">
+<link rel="alternate" href="assets/perfume-shot5.mp4" type="video/mp4">
+<link rel="alternate" href="assets/phone-film.mp4" type="video/mp4">
+<link rel="alternate" href="assets/bread-film.mp4" type="video/mp4">
+<style>
+/* ============ 基础 ============ */
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  --ink:#070709; --ink2:#0c0c0f; --ink3:#121216;
+  --paper:#f2eee7; --paper-dim:rgba(242,238,231,.62); --paper-faint:rgba(242,238,231,.34);
+  --line:rgba(242,238,231,.13); --line-soft:rgba(242,238,231,.07);
+  --accent:#c8a97b; --accent-dim:rgba(200,169,123,.6);
+  --serif:"Noto Serif SC","Songti SC","SimSun",serif;
+  --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  --pad:clamp(20px,4.8vw,76px);
+  --ease:cubic-bezier(.22,.61,.24,1);
+}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--paper);font-family:var(--sans);font-weight:400;font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+body.lock{overflow:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+::selection{background:var(--accent);color:#111}
+
+/* 胶片颗粒 */
+.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E")}
+.progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--accent);z-index:80;transition:width .1s linear}
+
+/* ============ 顶栏 ============ */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px var(--pad) 26px;
+background:linear-gradient(180deg,rgba(7,7,9,.9) 0%,rgba(7,7,9,.55) 62%,rgba(7,7,9,0) 100%)}
+.brand{display:flex;align-items:center;gap:11px;font-size:10.5px;letter-spacing:.32em;text-transform:uppercase;font-weight:500;white-space:nowrap}
+.brand i{width:5px;height:5px;border-radius:50%;background:var(--accent);flex:none}
+.nav{display:flex;gap:clamp(16px,2.6vw,40px);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase}
+.nav a{position:relative;color:var(--paper-dim);transition:color .35s var(--ease);padding-bottom:3px}
+.nav a:hover{color:var(--paper)}
+.nav a::after{content:"";position:absolute;left:0;bottom:-2px;width:100%;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.nav a:hover::after{transform:scaleX(1)}
+
+/* ============ 首屏 ============ */
+.hero{position:relative;min-height:100svh;display:grid;grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr);align-items:center;gap:clamp(24px,4.4vw,72px);
+padding:clamp(100px,15vh,168px) var(--pad) clamp(60px,9vh,110px)}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+background:radial-gradient(58% 52% at 74% 46%,rgba(58,86,138,.20),rgba(7,7,9,0) 68%),radial-gradient(40% 40% at 8% 92%,rgba(200,169,123,.08),rgba(7,7,9,0) 70%)}
+.hero-copy{position:relative;z-index:2;max-width:820px;min-width:0}
+.eyebrow{font-size:10px;letter-spacing:.34em;text-transform:uppercase;color:var(--paper-faint);margin:0 0 clamp(20px,3.2vh,36px);font-weight:400}
+.hero h1{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(36px,6.1vw,96px);line-height:1.1;letter-spacing:.005em}
+.hero h1 span{display:block}
+.hero h1 .accentline{color:var(--paper)}
+.hero-lede{margin:clamp(22px,3.6vh,38px) 0 0;max-width:40ch;color:var(--paper-dim);font-size:clamp(13px,1.1vw,15.5px);line-height:2;font-weight:300}
+.stats{display:flex;flex-wrap:wrap;gap:clamp(22px,3.6vw,54px);margin-top:clamp(30px,5vh,58px);padding-top:24px;border-top:1px solid var(--line);max-width:520px}
+.stat b{display:block;font-family:var(--serif);font-size:clamp(21px,2.3vw,30px);font-weight:600;letter-spacing:.06em;line-height:1.1}
+.stat span{display:block;margin-top:7px;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--paper-faint)}
+.hero-visual{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.16fr) minmax(0,.84fr);grid-template-rows:auto auto;gap:clamp(8px,1vw,14px);align-self:center;min-width:0}
+.hv{position:relative;margin:0;overflow:hidden;background:#111;border:1px solid var(--line-soft);min-width:0}
+.hv img{width:100%;height:100%;object-fit:cover;transform:scale(1.01);transition:transform 1.6s var(--ease),filter .6s}
+.hv:hover img{transform:scale(1.06)}
+.hv-a{grid-row:1/3;aspect-ratio:3/4}
+.hv-b{aspect-ratio:1/1}
+.hv-c{aspect-ratio:4/3}
+.hv figcaption{position:absolute;left:12px;bottom:10px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.86);text-shadow:0 1px 10px rgba(0,0,0,.7)}
+.hv::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 60px rgba(0,0,0,.45);pointer-events:none}
+.scrollcue{position:absolute;left:var(--pad);bottom:26px;display:flex;align-items:center;gap:12px;font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--paper-faint);z-index:2}
+.scrollcue i{display:block;width:34px;height:1px;background:var(--paper-faint);position:relative;overflow:hidden}
+.scrollcue i::after{content:"";position:absolute;inset:0;background:var(--accent);animation:cue 2.4s var(--ease) infinite}
+@keyframes cue{0%{transform:translateX(-100%)}55%{transform:translateX(0)}100%{transform:translateX(100%)}}
+
+/* ============ 滚动字条 ============ */
+.ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--ink2);overflow:hidden;padding:13px 0}
+.ticker-track{display:flex;width:max-content;animation:marq 46s linear infinite}
+.ticker span{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--paper-dim);padding:0 30px;position:relative;white-space:nowrap}
+.ticker span::after{content:"◆";position:absolute;right:-4px;color:var(--accent-dim);font-size:6px}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ============ 通用区块 ============ */
+.section{padding:clamp(66px,10vh,128px) var(--pad)}
+.section+.section{border-top:1px solid var(--line-soft)}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:clamp(20px,4vw,60px);margin-bottom:clamp(34px,5.4vh,68px);flex-wrap:wrap}
+.sec-head .hl{min-width:0}
+.sec-head .label{font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent-dim);margin:0 0 14px}
+.sec-head h2{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(26px,3.5vw,50px);line-height:1.16;letter-spacing:.01em}
+.sec-note{max-width:32ch;color:var(--paper-dim);font-size:12.5px;line-height:2;font-weight:300;margin:0}
+.sec-count{font-family:var(--serif);font-size:clamp(13px,1.2vw,16px);color:var(--paper-faint);letter-spacing:.1em;white-space:nowrap;padding-bottom:6px}
+
+/* ============ 作品 ============ */
+.works{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(26px,3.2vw,44px) clamp(20px,2.6vw,40px);align-items:start}
+.work{appearance:none;background:none;border:0;padding:0;margin:0;display:block;width:100%;text-align:left;cursor:pointer;color:inherit;position:relative;grid-column:span 1}
+.work--feature,.work--wide{grid-column:span 2}
+.work-media{position:relative;overflow:hidden;background:#101014;border:1px solid var(--line-soft)}
+.work-media img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform 1.5s var(--ease),filter .6s var(--ease);filter:saturate(.98)}
+.work--feature .work-media{aspect-ratio:16/9}
+.work--land .work-media{aspect-ratio:4/3}
+.work--port .work-media{aspect-ratio:3/4}
+.work--wide .work-media{aspect-ratio:16/7}
+.work-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,7,9,0) 52%,rgba(7,7,9,.42) 100%);opacity:0;transition:opacity .6s var(--ease);pointer-events:none}
+.work:hover .work-media img,.work:focus-visible .work-media img{transform:scale(1.045)}
+.work:hover .work-media::after{opacity:1}
+.viewtag{position:absolute;right:14px;bottom:14px;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.92);display:flex;align-items:center;gap:8px;opacity:0;transform:translateY(6px);transition:opacity .45s var(--ease),transform .45s var(--ease);z-index:2}
+.viewtag b{display:block;width:26px;height:26px;border:1px solid rgba(255,255,255,.5);border-radius:50%;line-height:24px;text-align:center;font-weight:400}
+.work:hover .viewtag,.work:focus-visible .viewtag{opacity:1;transform:translateY(0)}
+.work-meta{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-top:14px}
+.wm-left{display:flex;align-items:baseline;gap:12px;min-width:0}
+.idx{font-family:var(--serif);font-size:11px;color:var(--accent-dim);letter-spacing:.08em;flex:none}
+.work h3{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(15px,1.5vw,20px);line-height:1.4;letter-spacing:.01em;transition:color .3s}
+.work:hover h3{color:var(--accent)}
+.wm-cat{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--paper-faint);white-space:nowrap;flex:none}
+.work:focus-visible{outline:1px solid var(--accent);outline-offset:6px}
+
+/* ============ 方法 ============ */
+.approach{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(28px,5vw,80px);align-items:start}
+.quote{font-family:var(--serif);font-size:clamp(21px,2.5vw,34px);line-height:1.62;font-weight:400;margin:0;color:var(--paper)}
+.quote em{font-style:normal;color:var(--accent)}
+.approach-note{color:var(--paper-dim);font-size:13px;line-height:2.1;font-weight:300;margin:clamp(20px,3vh,30px) 0 0;max-width:36ch}
+.approach-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line-soft);border:1px solid var(--line-soft)}
+.cap{background:var(--ink2);padding:clamp(20px,2.4vw,30px);transition:background .45s}
+.cap:hover{background:var(--ink3)}
+.cap .cidx{font-family:var(--serif);font-size:10.5px;letter-spacing:.16em;color:var(--accent-dim)}
+.cap h3{margin:14px 0 4px;font-family:var(--serif);font-size:clamp(16px,1.4vw,19px);font-weight:600;letter-spacing:.02em}
+.cap .en{font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--paper-faint)}
+.cap p{margin:14px 0 0;font-size:12.5px;line-height:1.95;color:var(--paper-dim);font-weight:300}
+
+/* ============ 联系 ============ */
+.contact{display:grid;grid-template-columns:1.2fr .8fr;gap:clamp(34px,5vw,80px);align-items:center}
+.contact h2{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(28px,4vw,56px);line-height:1.24;letter-spacing:.01em}
+.contact p.cnote{margin:clamp(18px,3vh,28px) 0 0;max-width:34ch;color:var(--paper-dim);font-size:13px;line-height:2.05;font-weight:300}
+.crole{margin:16px 0 0;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-dim)}
+.cinfo{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:clamp(28px,4vh,42px) 0 0;max-width:720px}
+.cinfo div{background:var(--ink);padding:16px 20px 18px}
+.cinfo dt{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--paper-faint);margin:0 0 8px}
+.cinfo dd{margin:0;font-size:13.5px;line-height:1.85;color:var(--paper-dim);word-break:break-word}
+.cinfo a{transition:color .3s;border-bottom:1px solid transparent}
+.cinfo a:hover{color:var(--accent);border-color:var(--accent-dim)}
+.qr{justify-self:end;text-align:center;padding:clamp(18px,2vw,26px);border:1px solid var(--line);background:var(--ink2)}
+.qr img{width:clamp(140px,15vw,196px);height:auto;margin:0 auto;background:#fff;padding:8px}
+.qr p{margin:16px 0 0;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--paper-faint);line-height:1.9}
+
+/* ============ 页脚 ============ */
+.footer{padding:clamp(30px,5vh,54px) var(--pad) clamp(26px,4vh,40px);border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.footer p{margin:0;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--paper-faint);line-height:2}
+.footer .fnote{color:rgba(242,238,231,.22);letter-spacing:.12em;text-transform:none;font-size:10px}
+
+/* ============ 文档查看器 ============ */
+.viewer{position:fixed;inset:0;z-index:70;background:var(--ink);display:none}
+.viewer.open{display:block}
+.viewer-scroll{height:100%;overflow-y:auto;overflow-x:hidden;scroll-behavior:auto;-webkit-overflow-scrolling:touch}
+.vbar{position:fixed;top:0;left:0;right:0;z-index:74;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px var(--pad) 24px;
+background:linear-gradient(180deg,rgba(7,7,9,.96) 0%,rgba(7,7,9,.7) 70%,rgba(7,7,9,0) 100%);backdrop-filter:blur(4px)}
+.vback{appearance:none;background:none;border:0;padding:0;cursor:pointer;display:flex;align-items:center;gap:10px;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--paper-dim);transition:color .3s}
+.vback:hover{color:var(--paper)}
+.vback b{font-size:15px;letter-spacing:0;line-height:1}
+.vcenter{font-family:var(--serif);font-size:11px;letter-spacing:.16em;color:var(--paper-faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vclose{appearance:none;background:none;border:1px solid var(--line);width:36px;height:36px;cursor:pointer;color:var(--paper-dim);display:flex;align-items:center;justify-content:center;font-size:16px;line-height:1;transition:border-color .3s,color .3s,transform .3s;flex:none}
+.vclose:hover{border-color:var(--accent);color:var(--accent);transform:rotate(90deg)}
+.panel{display:none;padding:clamp(96px,13vh,140px) var(--pad) clamp(60px,9vh,100px);max-width:1560px;margin:0 auto}
+.panel.active{display:block;animation:fadeup .7s var(--ease) both}
+@keyframes fadeup{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.p-head{max-width:1100px}
+.p-head .label{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent-dim);margin:0 0 16px}
+.p-head h2{margin:0;font-family:var(--serif);font-weight:600;font-size:clamp(28px,4.6vw,64px);line-height:1.16;letter-spacing:.01em}
+.p-lede{margin:clamp(16px,2.6vh,26px) 0 0;font-family:var(--serif);font-size:clamp(15px,1.5vw,20px);color:var(--paper-dim);line-height:1.75}
+.p-specs{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:clamp(30px,4.4vh,48px) 0 0}
+.p-specs div{background:var(--ink);padding:18px 20px 20px}
+.p-specs dt{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--paper-faint);margin:0 0 9px}
+.p-specs dd{margin:0;font-size:12.5px;line-height:1.8;color:var(--paper-dim)}
+.p-media{margin:clamp(30px,4.6vh,56px) 0 0}
+.media-frame{position:relative;overflow:hidden;background:#000;border:1px solid var(--line-soft)}
+.media-frame video{width:100%;display:block;aspect-ratio:16/9;background:#000;object-fit:contain}
+.play{position:absolute;inset:0;width:100%;height:100%;border:0;cursor:pointer;background:radial-gradient(50% 50% at 50% 50%,rgba(0,0,0,.35),rgba(0,0,0,.55));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;color:#fff;transition:opacity .5s var(--ease);z-index:2}
+.play i{width:68px;height:68px;border:1px solid rgba(255,255,255,.65);border-radius:50%;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:13px;letter-spacing:.06em;transition:background .35s,border-color .35s,transform .35s}
+.play span{font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;opacity:.85}
+.play:hover i{background:var(--accent);border-color:var(--accent);color:#111;transform:scale(1.06)}
+.media-frame.playing .play,.media-frame.started .play{opacity:0;pointer-events:none}
+.media-cap{margin:12px 0 0;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--paper-faint)}
+.p-body{display:grid;grid-template-columns:1.55fr .45fr;gap:clamp(28px,5vw,72px);margin:clamp(34px,5vh,58px) 0 0;align-items:start}
+.p-text p{margin:0 0 20px;font-size:14px;line-height:2.15;color:var(--paper-dim);font-weight:300;max-width:52ch}
+.p-text p:first-child{color:var(--paper);font-size:15px}
+.p-aside{border-top:1px solid var(--line);padding-top:18px}
+.p-aside h4{margin:0 0 12px;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent-dim);font-weight:500}
+.p-aside ul{margin:0;padding:0;list-style:none;font-size:12px;line-height:2.2;color:var(--paper-dim);font-weight:300}
+.p-sub{display:flex;align-items:center;gap:18px;margin:clamp(44px,6.4vh,76px) 0 clamp(18px,2.6vh,26px);font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--paper-dim);font-weight:400}
+.p-sub::after{content:"";height:1px;flex:1;background:var(--line)}
+.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:clamp(12px,1.4vw,20px)}
+.shot{margin:0}
+.shot-media{position:relative;overflow:hidden;background:#000;border:1px solid var(--line-soft)}
+.shot video{width:100%;display:block;background:#000;aspect-ratio:16/9;object-fit:cover}
+.shot-play{position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;cursor:pointer;background:rgba(0,0,0,.28);display:flex;align-items:center;justify-content:center;transition:opacity .4s var(--ease)}
+.shot-play i{width:40px;height:40px;border:1px solid rgba(255,255,255,.7);border-radius:50%;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:10px;color:#fff;transition:background .3s,border-color .3s}
+.shot-play:hover i{background:var(--accent);border-color:var(--accent);color:#111}
+.shot-media.playing .shot-play,.shot-media.started .shot-play{opacity:0;pointer-events:none}
+.shot figcaption{margin-top:9px;display:flex;justify-content:space-between;gap:10px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--paper-faint)}
+.shot figcaption em{font-style:normal;color:rgba(242,238,231,.45)}
+.pgal{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(14px,1.6vw,24px)}
+.pgal figure{margin:0}
+.pgal figure.full{grid-column:1/-1}
+.pgal img{width:100%;height:auto;max-height:78vh;object-fit:contain;cursor:zoom-in;background:#0b0b0c;border:1px solid var(--line-soft);transition:opacity .4s}
+.pgal img:hover{opacity:.86}
+.pgal figcaption{margin-top:10px;font-size:10px;letter-spacing:.14em;color:var(--paper-faint);display:flex;gap:10px;align-items:baseline;line-height:1.8}
+.pgal figcaption b{font-family:var(--serif);font-size:9.5px;color:var(--accent-dim);font-weight:400;letter-spacing:.1em;flex:none}
+.psub-note{font-size:12.5px;color:var(--paper-dim);line-height:2;margin:0 0 22px;max-width:60ch;font-weight:300}
+.pnav{margin:clamp(52px,7vh,84px) 0 0;border-top:1px solid var(--line);padding-top:clamp(20px,3vh,30px);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.pnav button{appearance:none;background:none;border:0;padding:0;cursor:pointer;text-align:left;color:var(--paper-dim);transition:color .3s;display:flex;flex-direction:column;gap:8px}
+.pnav button:hover{color:var(--accent)}
+.pnav button .nlabel{font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--paper-faint)}
+.pnav button .ntitle{font-family:var(--serif);font-size:clamp(16px,1.7vw,22px);letter-spacing:.02em}
+.pnav .pgohome{font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--paper-faint);border-bottom:1px solid var(--line);padding-bottom:4px}
+.pnav .pgohome:hover{color:var(--paper);border-color:var(--accent)}
+
+/* ============ 灯箱 ============ */
+.lightbox{position:fixed;inset:0;z-index:96;background:rgba(5,5,6,.95);display:none;align-items:center;justify-content:center;padding:3vh 3vw;cursor:zoom-out}
+.lightbox.on{display:flex}
+.lightbox img{max-width:94vw;max-height:94vh;object-fit:contain;box-shadow:0 30px 90px rgba(0,0,0,.6)}
+
+/* ============ 动效 ============ */
+[data-reveal]{opacity:0;transform:translateY(26px);transition:opacity .95s var(--ease),transform .95s var(--ease)}
+[data-reveal].in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important}
+  [data-reveal]{opacity:1;transform:none}
+}
+
+/* ============ 响应 ============ */
+@media (max-width:1080px){
+  .hero{grid-template-columns:1fr;gap:clamp(34px,6vh,60px);min-height:auto;padding-top:clamp(110px,16vh,150px)}
+  .hero-visual{max-width:720px;width:100%}
+  .scrollcue{display:none}
+  .approach,.contact{grid-template-columns:1fr}
+  .qr{justify-self:start;margin-top:10px}
+  .contact .cinfo{margin-top:26px}
+  .p-body{grid-template-columns:1fr}
+  .p-specs{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:760px){
+  .works{grid-template-columns:1fr}
+  .work--feature,.work--wide{grid-column:span 1}
+  .work--wide .work-media{aspect-ratio:4/3}
+  .work--port .work-media{aspect-ratio:4/5}
+  .work-meta{flex-direction:column;gap:4px}
+  .wm-cat{white-space:normal}
+  .nav .en{display:none}
+  .sec-head{flex-direction:column;align-items:flex-start;gap:16px}
+  .sec-note{max-width:36ch}
+  .approach-grid{grid-template-columns:1fr}
+  .cinfo{grid-template-columns:1fr}
+  .nav{gap:14px;font-size:9.5px;letter-spacing:.14em}
+  .brand{font-size:9.5px;letter-spacing:.22em}
+  .pgal{grid-template-columns:1fr}
+  .p-specs{grid-template-columns:1fr}
+  .vcenter{display:none}
+  .hero h1{font-size:clamp(32px,10vw,46px)}
+  .hv-a{grid-row:1/3}
+  .play i{width:54px;height:54px}
+  .footer{flex-direction:column;align-items:flex-start}
+}
+@media (max-width:640px){
+  .hero-visual{grid-template-columns:1fr}
+  .hv-b,.hv-c{display:none}
+  .hv-a{grid-row:auto;aspect-ratio:4/5}
+}
+@media (max-width:420px){
+  .stats{gap:20px}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- ============ 顶栏 ============ -->
+<header class="topbar">
+  <div class="brand"><i></i>张云睿 · 视觉作品集</div>
+  <nav class="nav" aria-label="主导航">
+    <a href="#works">作品<span class="en"> Works</span></a>
+    <a href="#about">方法<span class="en"> Approach</span></a>
+    <a href="#contact">联系<span class="en"> Contact</span></a>
+  </nav>
+</header>
+
+<main>
+<!-- ============ 首屏 ============ -->
+<section class="hero" id="top">
+  <div class="hero-copy">
+    <p class="eyebrow">张云睿 — AIGC Visual Portfolio 2026</p>
+    <h1><span>以模型为笔，</span><span class="accentline">向想象取景。</span></h1>
+    <p class="hero-lede">六个项目，五支短片，十九帧静帧。从永夜降临的冰蓝色星球，到一瓶牛奶的清晨——记录生成式影像在叙事与商业之间能走多远。</p>
+    <div class="stats">
+      <div class="stat"><b>06</b><span>项目 Projects</span></div>
+      <div class="stat"><b>05</b><span>成片 Films</span></div>
+      <div class="stat"><b>19</b><span>静帧 Stills</span></div>
+    </div>
+  </div>
+  <div class="hero-visual" data-reveal>
+    <figure class="hv hv-a"><img src="assets/perfume-bottle.jpg" alt="黑金香水瓶主视觉"><figcaption>NOIRÉ / 香水</figcaption></figure>
+    <figure class="hv hv-b"><img src="assets/zero-character.jpg" alt="希亚角色设定集"><figcaption>希亚 / 角色设定</figcaption></figure>
+    <figure class="hv hv-c"><img src="assets/bread-exploded.jpg" alt="奶油面包分解图"><figcaption>奶油面包 / 分解</figcaption></figure>
+  </div>
+  <div class="scrollcue" aria-hidden="true"><i></i>Scroll</div>
+</section>
+
+<!-- ============ 字条 ============ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Game Concept PV</span><span>Book Cover Design</span><span>Luxury Fragrance</span><span>3C Product Film</span><span>Dairy Commercial</span><span>Food Film</span><span>Character Design</span><span>Storyboard</span>
+    <span>Game Concept PV</span><span>Book Cover Design</span><span>Luxury Fragrance</span><span>3C Product Film</span><span>Dairy Commercial</span><span>Food Film</span><span>Character Design</span><span>Storyboard</span>
+  </div>
+</div>
+
+<!-- ============ 作品 ============ -->
+<section class="section" id="works">
+  <div class="sec-head" data-reveal>
+    <div class="hl">
+      <p class="label">Selected Works</p>
+      <h2>精选作品</h2>
+    </div>
+    <p class="sec-note">六个方向，同一套方法：先把视觉规则立住，再让模型在规则里反复取样。</p>
+  </div>
+
+  <div class="works">
+    <button class="work work--feature" type="button" data-open="zero" aria-label="查看项目：零号纪元 最后的觉醒">
+      <figure class="work-media"><img src="assets/zero-poster.jpg" alt="零号纪元：最后的觉醒 主海报" loading="lazy"><span class="viewtag">View project <b>↗</b></span></figure>
+      <div class="work-meta">
+        <div class="wm-left"><span class="idx">01</span><h3>零号纪元：最后的觉醒</h3></div>
+        <p class="wm-cat">Game Concept PV · 2026</p>
+      </div>
+    </button>
+
+    <button class="work work--land" type="button" data-open="book" aria-label="查看项目：中国古代物理成就 书籍装帧">
+      <figure class="work-media"><img src="assets/book-mengxibitan.jpg" alt="中国古代物理成就系列 梦溪笔谈篇 封面" loading="lazy"><span class="viewtag">View project <b>↗</b></span></figure>
+      <div class="work-meta">
+        <div class="wm-left"><span class="idx">02</span><h3>中国古代物理成就 · 漫画版</h3></div>
+        <p class="wm-cat">Book Design · 5 Vols</p>
+      </div>
+    </button>
+
+    <button class="work work--land" type="button" data-open="milk" aria-label="查看项目：有机牛奶广告">
+      <figure class="work-media"><img src="assets/milk-product.jpg" alt="有机低脂牛奶产品主视觉" loading="lazy"><span class="viewtag">View project <b>↗</b></span></figure>
+      <div class="work-meta">
+        <div class="wm-left"><span class="idx">03</span><h3>有机牛奶 · 15 秒广告</h3></div>
+        <p class="wm-cat">Dairy Commercial</p>
+      </div>
+    </button>
+
+    <button class="work work--port" type="button" data-open="perfume" aria-label="查看项目：NOIRÉ 香水广告">
+      <figure class="work-media"><img src="assets/perfume-bottle.jpg" alt="NOIRÉ ÉCLAT NOIR 香水瓶主视觉" loading="lazy"><span class="viewtag">View project <b>↗</b></span></figure>
+      <div class="work-meta">
+        <div class="wm-left"><span class="idx">04</span><h3>NOIRÉ · ÉCLAT NOIR</h3></div>
+        <p class="wm-cat">Fragrance Film</p>
+      </div>
+    </button>
+
+    <button class="work work--port" type="button" data-open="phone" aria-label="查看项目：手机产品概念广告">
+      <figure class="work-media"><img src="assets/phone-cover.jpg" alt="冰川蓝手机悬浮主视觉" loading="lazy"><span class="viewtag">View project <b>↗</b></span></figure>
+      <div class="work-meta">
+        <div class="wm-left"><span class="idx">05</span><h3>冰川蓝 · 手机概念广告</h3></div>
+        <p class="wm-cat">3C Product Film</p>
+      </div>
+    </button>
+
+    <button class="work work--wide" type="button" data-open="bread" aria-label="查看项目：奶油面包广告">
+      <figure class="work-media"><img src="assets/bread-exploded.jpg" alt="奶油面包撕开的分解特写" loading="lazy"><span class="viewtag">View project <b>↗</b></span></figure>
+      <div class="work-meta">
+        <div class="wm-left"><span class="idx">06</span><h3>奶油面包 · 撕开的瞬间</h3></div>
+        <p class="wm-cat">Food Film · 13s</p>
+      </div>
+    </button>
+  </div>
+</section>
+
+<!-- ============ 方法 ============ -->
+<section class="section" id="about">
+  <div class="sec-head" data-reveal>
+    <div class="hl">
+      <p class="label">Approach</p>
+      <h2>方法论</h2>
+    </div>
+    <p class="sec-note">每一个项目都从一条可复用的视觉规则开始，而不是从一次随机生成开始。</p>
+  </div>
+  <div class="approach">
+    <div data-reveal>
+      <p class="quote">生成不是随机。<br>先立住<em>规则</em>，<br>再让模型在规则里<em>取样</em>。</p>
+      <p class="approach-note">色板、光位、材质与版式先被确定，模型负责在这个边界内把画面填满。多轮取样、比对、筛选，直到画面与叙事对齐，最后统一调色与节奏，让一组素材变成一支片子或一套书封。</p>
+    </div>
+    <div class="approach-grid" data-reveal>
+      <div class="cap"><span class="cidx">01</span><h3>概念与世界观</h3><p class="en">Concept</p><p>从一句话设定出发，搭建场景、角色与色彩规范，保证跨镜头的一致性。</p></div>
+      <div class="cap"><span class="cidx">02</span><h3>影像生成</h3><p class="en">Film</p><p>文生 / 图生视频、分镜衔接、节奏与音画对位，单支成片控制在 15–30 秒。</p></div>
+      <div class="cap"><span class="cidx">03</span><h3>品牌视觉</h3><p class="en">Brand</p><p>产品主视觉、多视图矩阵与广告分镜，覆盖香水、3C、乳品与食品品类。</p></div>
+      <div class="cap"><span class="cidx">04</span><h3>装帧与排版</h3><p class="en">Editorial</p><p>书封展开稿、系列化主题色、信息层级与字体搭配，一套版式支撑五册。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 联系 ============ -->
+<section class="section" id="contact">
+  <div class="contact">
+    <div data-reveal>
+      <p class="label" style="font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent-dim);margin:0 0 16px">Contact / 联系</p>
+      <h2>张云睿</h2>
+      <p class="crole">数字媒体技术 · 2027 届本科生</p>
+      <p class="cnote">寻找视觉设计、AIGC 影像与数字媒体方向的实习机会。作品涵盖游戏概念 PV、品牌广告与书籍装帧，可随时到岗。</p>
+      <dl class="cinfo">
+        <div><dt>电话</dt><dd><a href="tel:13116120873">131 1612 0873</a></dd></div>
+        <div><dt>邮箱</dt><dd><a href="mailto:zyr040301@outlook.com">zyr040301@outlook.com</a></dd></div>
+        <div><dt>地点</dt><dd><span>接受异地实习</span></dd></div>
+        <div><dt>到岗</dt><dd><span>随时到岗 · 每周 5 天及以上 · 可连续 6 个月以上</span></dd></div>
+      </dl>
+    </div>
+    <div class="qr" data-reveal>
+      <img src="assets/qr.png" alt="作品集网站分享二维码" loading="lazy">
+      <p>扫码浏览 / Scan to view</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <p>© 2026 张云睿 · AIGC 视觉作品集</p>
+</footer>
+
+<!-- ============ 文档查看器 ============ -->
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="项目详情">
+  <div class="vbar">
+    <button class="vback" type="button" data-close><b>←</b> 返回作品</button>
+    <p class="vcenter" id="vtitle">01 / 06</p>
+    <button class="vclose" type="button" data-close aria-label="关闭">✕</button>
+  </div>
+
+  <div class="viewer-scroll" id="viewerScroll">
+
+    <!-- ===== 项目 01 零号纪元 ===== -->
+    <section class="panel" id="p-zero" data-idx="01 / 06" data-title="零号纪元：最后的觉醒" data-next="book">
+      <header class="p-head">
+        <p class="label">Project 01 — Game Concept PV</p>
+        <h2>零号纪元<br>最后的觉醒</h2>
+        <p class="p-lede">当世界陷入永夜，总有人为黎明而战。</p>
+        <dl class="p-specs">
+          <div><dt>类型</dt><dd>原创游戏概念 PV / 世界观影像</dd></div>
+          <div><dt>时长</dt><dd>30 秒成片 + 4 段分镜</dd></div>
+          <div><dt>制作</dt><dd>概念、生成、剪辑独立完成</dd></div>
+          <div><dt>视觉</dt><dd>冰蓝主色 · 单一色板贯穿</dd></div>
+        </dl>
+      </header>
+
+      <div class="p-media">
+        <div class="media-frame">
+          <video preload="none" playsinline poster="assets/zero-poster.jpg" aria-label="零号纪元 成片">
+            <source src="assets/zero-film.mp4" type="video/mp4">
+          </video>
+          <button class="play" type="button"><i>▶</i><span>播放成片 · 30s</span></button>
+        </div>
+        <p class="media-cap">成片 / 30s / 24–30fps / 网页版 720p</p>
+      </div>
+
+      <div class="p-body">
+        <div class="p-text">
+          <p>这是一支原创游戏概念 PV。故事从一艘坠落的轨道空间站开始：永夜覆盖地表，城市只剩下冰蓝色的轮廓。角色「希亚」在休眠舱中苏醒，提着能量剑走向地平线上唯一的光源。</p>
+          <p>制作上先建立世界观：轨道环、遗迹城市、能量材质与同一个色板。角色三视图锁定发色、服装结构与武器比例之后，再拆成四段分镜逐一生成，最后统一调色、节奏与开场标识。</p>
+        </div>
+        <aside class="p-aside">
+          <h4>制作路径</h4>
+          <ul>
+            <li>01 世界观概念图</li>
+            <li>02 角色三视图设定</li>
+            <li>03 四段分镜生成</li>
+            <li>04 剪辑 · 调色 · 标识动画</li>
+          </ul>
+        </aside>
+      </div>
+
+      <h3 class="p-sub">分镜 / Shot List</h3>
+      <div class="shots">
+        <figure class="shot">
+          <video preload="none" playsinline poster="assets/zero-shot1.jpg" aria-label="镜头 1"><source src="assets/zero-shot1.mp4" type="video/mp4"></video>
+          <figcaption><span>镜头 01</span><em>5.1s</em></figcaption>
+        </figure>
+        <figure class="shot">
+          <video preload="none" playsinline poster="assets/zero-shot2.jpg" aria-label="镜头 2"><source src="assets/zero-shot2.mp4" type="video/mp4"></video>
+          <figcaption><span>镜头 02</span><em>5.1s</em></figcaption>
+        </figure>
+        <figure class="shot">
+          <video preload="none" playsinline poster="assets/zero-shot3.jpg" aria-label="镜头 3"><source src="assets/zero-shot3.mp4" type="video/mp4"></video>
+          <figcaption><span>镜头 03</span><em>5.1s</em></figcaption>
+        </figure>
+        <figure class="shot">
+          <video preload="none" playsinline poster="assets/zero-shot4.jpg" aria-label="镜头 4"><source src="assets/zero-shot4.mp4" type="video/mp4"></video>
+          <figcaption><span>镜头 04</span><em>8.7s</em></figcaption>
+        </figure>
+        <figure class="shot">
+          <video preload="none" playsinline poster="assets/zero-logo.jpg" aria-label="标识动画"><source src="assets/zero-logo.mp4" type="video/mp4"></video>
+          <figcaption><span>标识动画</span><em>5.1s</em></figcaption>
+        </figure>
+      </div>
+
+      <h3 class="p-sub">静帧 / Stills</h3>
+      <div class="pgal">
+        <figure class="full"><img class="zoom" src="assets/zero-poster.jpg" alt="零号纪元 主海报" loading="lazy"><figcaption><b>主海报</b> ZERO ERA 主视觉 · 星球、轨道环与地平线光源</figcaption></figure>
+        <figure><img class="zoom" src="assets/zero-pod.jpg" alt="冰蓝休眠舱中的银发少女" loading="lazy"><figcaption><b>休眠舱</b> 冰蓝舱体内的银发少女</figcaption></figure>
+        <figure><img class="zoom" src="assets/zero-exit.jpg" alt="希亚走出休眠舱" loading="lazy"><figcaption><b>出舱</b> 苏醒后走向光源的第一帧</figcaption></figure>
+        <figure class="full"><img class="zoom" src="assets/zero-character.jpg" alt="希亚角色设定集" loading="lazy"><figcaption><b>角色设定集</b> 三视图 · 面部表情 · 战衣细节 · 能量剑</figcaption></figure>
+      </div>
+
+      <div class="pnav">
+        <button type="button" data-open="book"><span class="nlabel">下一个项目 / Next</span><span class="ntitle">02 中国古代物理成就 · 漫画版</span></button>
+        <button class="pgohome" type="button" data-close>返回全部作品</button>
+      </div>
+    </section>
+
+    <!-- ===== 项目 02 书籍装帧 ===== -->
+    <section class="panel" id="p-book" data-idx="02 / 06" data-title="中国古代物理成就 · 漫画版" data-next="milk">
+      <header class="p-head">
+        <p class="label">Project 02 — Book Cover Design</p>
+        <h2>一看就懂的<br>中国古代物理成就</h2>
+        <p class="p-lede">把典籍里的物理，画成少年看得懂的问题。</p>
+        <dl class="p-specs">
+          <div><dt>类型</dt><dd>少年科普漫画 · 系列装帧</dd></div>
+          <div><dt>规模</dt><dd>5 册 · 展开式封面（封面＋书脊＋封底）</dd></div>
+          <div><dt>开本</dt><dd>1417 × 992 px 横版对开</dd></div>
+          <div><dt>分册</dt><dd>考工记 / 论衡 / 梦溪笔谈 / 墨经 / 天工开物</dd></div>
+        </dl>
+      </header>
+
+      <div class="p-media">
+        <figure style="margin:0">
+          <img class="zoom" src="assets/book-mengxibitan.jpg" alt="梦溪笔谈篇 展开封面" style="width:100%;border:1px solid var(--line-soft);cursor:zoom-in" loading="lazy">
+          <p class="media-cap">梦溪笔谈篇 / 展开稿 · 封面 + 书脊 + 封底 一次成型</p>
+        </figure>
+      </div>
+
+      <div class="p-body">
+        <div class="p-text">
+          <p>一套五册的中国古代科技典籍漫画版装帧。每册对应一部典籍，用独立的主题色区分；封面主画面还原书中一个真实可感的物理问题——船尾转向时船头为什么一起转、古人怎么榨甘蔗汁——让抽象概念先变成一个看得懂的现场。</p>
+          <p>整套书封共用一套版式：封底放全系列缩略与条形码，书脊承载书名与编者署名，封面以大标题、漫画场景和气泡对白构成阅读入口，右下角统一落“更适合少年的物理读物”这句话。</p>
+        </div>
+        <aside class="p-aside">
+          <h4>版式系统</h4>
+          <ul>
+            <li>封底 · 系列缩略 + 条码</li>
+            <li>书脊 · 书名 + 册序</li>
+            <li>封面 · 标题 + 场景 + 对白</li>
+            <li>色板 · 一册一色</li>
+          </ul>
+        </aside>
+      </div>
+
+      <h3 class="p-sub">五册封面 / Five Volumes</h3>
+      <div class="pgal">
+        <figure><img class="zoom" src="assets/book-kaogongji.jpg" alt="考工记篇 封面" loading="lazy"><figcaption><b>01</b> 考工记篇 · 珊瑚红 / 造车、弓箭与度量</figcaption></figure>
+        <figure><img class="zoom" src="assets/book-lunheng.jpg" alt="论衡篇 封面" loading="lazy"><figcaption><b>02</b> 论衡篇 · 草绿 / 云雨、寒暑与形影</figcaption></figure>
+        <figure><img class="zoom" src="assets/book-mengxibitan.jpg" alt="梦溪笔谈篇 封面" loading="lazy"><figcaption><b>03</b> 梦溪笔谈篇 · 湖蓝 / 山川、弓矢与野外观察</figcaption></figure>
+        <figure><img class="zoom" src="assets/book-mojing.jpg" alt="墨经篇 封面" loading="lazy"><figcaption><b>04</b> 墨经篇 · 藤黄 / 小孔成像、杠杆与光影</figcaption></figure>
+        <figure class="full"><img class="zoom" src="assets/book-tiangongkaiwu.jpg" alt="天工开物篇 封面" loading="lazy"><figcaption><b>05</b> 天工开物篇 · 玫红 / 榨甘蔗的辊轴与一整套机械</figcaption></figure>
+      </div>
+
+      <div class="pnav">
+        <button type="button" data-open="milk"><span class="nlabel">下一个项目 / Next</span><span class="ntitle">03 有机牛奶 · 15 秒广告</span></button>
+        <button class="pgohome" type="button" data-close>返回全部作品</button>
+      </div>
+    </section>
+
+    <!-- ===== 项目 03 牛奶 ===== -->
+    <section class="panel" id="p-milk" data-idx="03 / 06" data-title="有机牛奶 · 15 秒广告" data-next="perfume">
+      <header class="p-head">
+        <p class="label">Project 03 — Dairy Commercial</p>
+        <h2>有机牛奶<br>低脂的清晨</h2>
+        <p class="p-lede">干净，是低脂最直接的表达。</p>
+        <dl class="p-specs">
+          <div><dt>类型</dt><dd>乳品品牌广告 / 产品视觉</dd></div>
+          <div><dt>时长</dt><dd>15 秒成片</dd></div>
+          <div><dt>视觉</dt><dd>薄荷绿 · 白色瓶身 · 绿色标签</dd></div>
+          <div><dt>内容</dt><dd>倒出 · 泛起 · 产品定格</dd></div>
+        </dl>
+      </header>
+
+      <div class="p-media">
+        <div class="media-frame">
+          <video preload="none" playsinline poster="assets/milk-product.jpg" aria-label="有机牛奶广告成片">
+            <source src="assets/milk-film.mp4" type="video/mp4">
+          </video>
+          <button class="play" type="button"><i>▶</i><span>播放成片 · 15s</span></button>
+        </div>
+        <p class="media-cap">成片 / 15s / 60fps / 网页版 720p</p>
+      </div>
+
+      <div class="p-body">
+        <div class="p-text">
+          <p>薄荷绿背景把白色瓶身推到画面正中央，绿色瓶盖与“low fat”色块形成同色呼应。没有多余的场景，只保留三种元素：背景、瓶、光。</p>
+          <p>短片沿用产品主视觉先定光的方式：柔和的顶部光加一层淡淡反射，保留玻璃的高光与纸标的哑光差异，再让奶液在瓶口泛起、落定，最后回到产品定格收尾。</p>
+        </div>
+        <aside class="p-aside">
+          <h4>视觉要点</h4>
+          <ul>
+            <li>单一绿色系分层</li>
+            <li>柔和顶部光 + 低对比</li>
+            <li>瓶身居中构图</li>
+            <li>结尾产品定格</li>
+          </ul>
+        </aside>
+      </div>
+
+      <h3 class="p-sub">主视觉 / Key Visual</h3>
+      <div class="pgal">
+        <figure class="full"><img class="zoom" src="assets/milk-product.jpg" alt="有机低脂牛奶产品图" loading="lazy"><figcaption><b>产品主视觉</b> Organic milk · low fat · 0.5 L</figcaption></figure>
+      </div>
+
+      <div class="pnav">
+        <button type="button" data-open="perfume"><span class="nlabel">下一个项目 / Next</span><span class="ntitle">04 NOIRÉ · ÉCLAT NOIR</span></button>
+        <button class="pgohome" type="button" data-close>返回全部作品</button>
+      </div>
+    </section>
+
+    <!-- ===== 项目 04 香水 ===== -->
+    <section class="panel" id="p-perfume" data-idx="04 / 06" data-title="NOIRÉ · ÉCLAT NOIR" data-next="phone">
+      <header class="p-head">
+        <p class="label">Project 04 — Luxury Fragrance Film</p>
+        <h2>NOIRÉ<br>ÉCLAT NOIR</h2>
+        <p class="p-lede">黑，是这支香水的第一层气味。</p>
+        <dl class="p-specs">
+          <div><dt>类型</dt><dd>香水品牌广告</dd></div>
+          <div><dt>时长</dt><dd>15 秒成片 + 5 段分镜</dd></div>
+          <div><dt>光位</dt><dd>纯黑背景 · 单侧逆光</dd></div>
+          <div><dt>材质</dt><dd>玻璃折射 · 金色液体 · 金属拉丝</dd></div>
+        </dl>
+      </header>
+
+      <div class="p-media">
+        <div class="media-frame">
+          <video preload="none" playsinline poster="assets/perfume-bottle.jpg" aria-label="NOIRÉ 香水广告成片">
+            <source src="assets/perfume-film.mp4" type="video/mp4">
+          </video>
+          <button class="play" type="button"><i>▶</i><span>播放成片 · 15s</span></button>
+        </div>
+        <p class="media-cap">成片 / 15s / 30fps / 网页版 720p</p>
+      </div>
+
+      <div class="p-body">
+        <div class="p-text">
+          <p>纯黑的无缝背景里，只留一束侧逆光穿过玻璃瓶体，金色液体成为画面里唯一的光源。瓶盖的金属拉丝、瓶身的厚边折射与台面倒影，构成整支片子的材质叙事。</p>
+          <p>五个镜头从局部推到整体：瓶盖、瓶颈、瓶身、光影流动、品牌标识。节奏刻意放慢，让光泽自己说话，也让黑色始终占据画面的大部分。</p>
+        </div>
+        <aside class="p-aside">
+          <h4>镜头结构</h4>
+          <ul>
+            <li>01 金属瓶盖</li>
+            <li>02 瓶颈与液面</li>
+            <li>03 瓶身厚度</li>
+            <li>04 光影流动</li>
+            <li>05 品牌标识</li>
+          </ul>
+        </aside>
+      </div>
+
+      <h3 class="p-sub">分镜 / Shot List</h3>
+      <div class="shots">
+        <figure class="shot">
+          <video preload="none" playsinline poster="assets/perfume-shot1.jpg" aria-label="香水镜头 1"><source src="assets/perfume-shot1.mp4" type="video/mp4"></video>
+          <figcaption><span>镜头 01</span><em>5.0s</em></figcaption>
+        </figure>
+        <figure class="shot">
+          <video preload="none" playsinline poster="assets/perfume-shot2.jpg" aria-label="香水镜头 2"><source src="assets/perfume-shot2.mp4" type="video/mp4"></video>
+          <figcaption><span>镜头 02</span><em>5.0s</em></figcaption>
+        </figure>
+        <figure class="shot">
+          <video preload="none" playsinline poster="assets/perfume-shot3.jpg" aria-label="香水镜头 3"><source src="assets/perfume-shot3.mp4" type="video/mp4"></video>
+          <figcaption><span>镜头 03</span><em>5.0s</em></figcaption>
+        </figure>
+        <figure class="shot">
+          <video preload="none" playsinline poster="assets/perfume-shot4.jpg" aria-label="香水镜头 4"><source src="assets/perfume-shot4.mp4" type="video/mp4"></video>
+          <figcaption><span>镜头 04</span><em>5.0s</em></figcaption>
+        </figure>
+        <figure class="shot">
+          <video preload="none" playsinline poster="assets/perfume-shot5.jpg" aria-label="香水镜头 5"><source src="assets/perfume-shot5.mp4" type="video/mp4"></video>
+          <figcaption><span>镜头 05</span><em>5.0s</em></figcaption>
+        </figure>
+      </div>
+
+      <h3 class="p-sub">静帧 / Stills</h3>
+      <div class="pgal">
+        <figure><img class="zoom" src="assets/perfume-bottle.jpg" alt="黑金香水瓶主视觉" loading="lazy"><figcaption><b>主视觉</b> 纯黑背景中的瓶身与金色液体</figcaption></figure>
+        <figure><img class="zoom" src="assets/perfume-multiview.jpg" alt="香水多视图" loading="lazy"><figcaption><b>多视图</b> 瓶体比例、瓶盖与光位矩阵</figcaption></figure>
+      </div>
+
+      <div class="pnav">
+        <button type="button" data-open="phone"><span class="nlabel">下一个项目 / Next</span><span class="ntitle">05 冰川蓝 · 手机概念广告</span></button>
+        <button class="pgohome" type="button" data-close>返回全部作品</button>
+      </div>
+    </section>
+
+    <!-- ===== 项目 05 手机 ===== -->
+    <section class="panel" id="p-phone" data-idx="05 / 06" data-title="冰川蓝 · 手机概念广告" data-next="bread">
+      <header class="p-head">
+        <p class="label">Project 05 — 3C Product Film</p>
+        <h2>冰川蓝<br>手机概念广告</h2>
+        <p class="p-lede">一块冰川蓝的金属，如何被光读出来。</p>
+        <dl class="p-specs">
+          <div><dt>类型</dt><dd>3C 产品视觉与广告短片</dd></div>
+          <div><dt>时长</dt><dd>15 秒成片</dd></div>
+          <div><dt>前置</dt><dd>九宫格多视图确认机身与镜头模组</dd></div>
+          <div><dt>视觉</dt><dd>冰川蓝 · 悬浮 · 中框高光</dd></div>
+        </dl>
+      </header>
+
+      <div class="p-media">
+        <div class="media-frame">
+          <video preload="none" playsinline poster="assets/phone-multiview.jpg" aria-label="手机概念广告成片">
+            <source src="assets/phone-film.mp4" type="video/mp4">
+          </video>
+          <button class="play" type="button"><i>▶</i><span>播放成片 · 15s</span></button>
+        </div>
+        <p class="media-cap">成片 / 15s / 24fps / 网页版 720p</p>
+      </div>
+
+      <div class="p-body">
+        <div class="p-text">
+          <p>先用九宫格多视图确认机身比例、三摄模组与金属中框的倒角关系——这一步决定产品在画面里是否立得住。再把同一套材质放进短片：机身悬浮、缓慢旋转，高光沿着中框滑动，镜头模组在暗部里反射出一点冷光。</p>
+          <p>全片只用一种蓝。通过明度、反光与阴影区分层次，让产品在纯色环境里依然保持立体；镜头语言克制，几乎没有运动镜头，只靠物体的转动和光的变化推进。</p>
+        </div>
+        <aside class="p-aside">
+          <h4>工作顺序</h4>
+          <ul>
+            <li>01 多视图定比例</li>
+            <li>02 材质与光位测试</li>
+            <li>03 悬浮旋转短片</li>
+            <li>04 统一蓝色调</li>
+          </ul>
+        </aside>
+      </div>
+
+      <h3 class="p-sub">静帧 / Stills</h3>
+      <div class="pgal">
+        <figure class="full"><img class="zoom" src="assets/phone-multiview.jpg" alt="手机九宫格多视图" loading="lazy"><figcaption><b>多视图</b> 九宫格 · 机身、镜头模组、Logo 与悬浮姿态</figcaption></figure>
+        <figure class="full"><img class="zoom" src="assets/phone-product.jpg" alt="手机产品主视觉" loading="lazy"><figcaption><b>产品主视觉</b> 冰川蓝机身背部与三摄模组</figcaption></figure>
+      </div>
+
+      <div class="pnav">
+        <button type="button" data-open="bread"><span class="nlabel">下一个项目 / Next</span><span class="ntitle">06 奶油面包 · 撕开的瞬间</span></button>
+        <button class="pgohome" type="button" data-close>返回全部作品</button>
+      </div>
+    </section>
+
+    <!-- ===== 项目 06 面包 ===== -->
+    <section class="panel" id="p-bread" data-idx="06 / 06" data-title="奶油面包 · 撕开的瞬间" data-next="zero">
+      <header class="p-head">
+        <p class="label">Project 06 — Food Film</p>
+        <h2>奶油面包<br>撕开的瞬间</h2>
+        <p class="p-lede">食欲，藏在撕开的那个瞬间。</p>
+        <dl class="p-specs">
+          <div><dt>类型</dt><dd>食品广告 / 视觉设定</dd></div>
+          <div><dt>时长</dt><dd>13 秒成片</dd></div>
+          <div><dt>设定</dt><dd>产品图 · 分解图 · 角色三视图 · 双场景</dd></div>
+          <div><dt>视觉</dt><dd>奶油白 · 焦糖金 · 柔光棚拍</dd></div>
+        </dl>
+      </header>
+
+      <div class="p-media">
+        <div class="media-frame">
+          <video preload="none" playsinline poster="assets/bread-exploded.jpg" aria-label="奶油面包广告成片">
+            <source src="assets/bread-film.mp4" type="video/mp4">
+          </video>
+          <button class="play" type="button"><i>▶</i><span>播放成片 · 13s</span></button>
+        </div>
+        <p class="media-cap">成片 / 13s / 24fps / 网页版 720p</p>
+      </div>
+
+      <div class="p-body">
+        <div class="p-text">
+          <p>这支片子只做一件事：把面包掰开。外皮的裂纹、内部的蜂窝孔洞与拉丝的奶油，在近景里被放大成一种触感。产品图、分解图与两张场景背景先确定光线与材质，再进入动态。</p>
+          <p>角色以三视图（正、侧、背）锁定出镜模特的米色西装与白色裤装，让人物段落与产品特写保持同一套色温和柔光逻辑，避免真实与生成画面之间出现断层。</p>
+        </div>
+        <aside class="p-aside">
+          <h4>素材设定</h4>
+          <ul>
+            <li>产品 · 完整面包</li>
+            <li>分解 · 撕开质感</li>
+            <li>角色 · 三视图</li>
+            <li>场景 · 背景 01 / 02</li>
+          </ul>
+        </aside>
+      </div>
+
+      <h3 class="p-sub">静帧 / Stills</h3>
+      <div class="pgal">
+        <figure class="full"><img class="zoom" src="assets/bread-exploded.jpg" alt="奶油面包分解特写" loading="lazy"><figcaption><b>分解图</b> 撕开的面包与拉丝奶油 · 主视觉之一</figcaption></figure>
+        <figure><img class="zoom" src="assets/bread-product.jpg" alt="奶油面包产品图" loading="lazy"><figcaption><b>产品</b> 完整面包 · 外皮与糖霜颗粒</figcaption></figure>
+        <figure><img class="zoom" src="assets/bread-character.jpg" alt="模特三视图" loading="lazy"><figcaption><b>角色</b> 米色西装三视图 · 正 / 侧 / 背</figcaption></figure>
+        <figure><img class="zoom" src="assets/bread-bg1.jpg" alt="场景背景 01" loading="lazy"><figcaption><b>场景 01</b> 柔光背景与台面</figcaption></figure>
+        <figure><img class="zoom" src="assets/bread-bg2.jpg" alt="场景背景 02" loading="lazy"><figcaption><b>场景 02</b> 备用背景与光位</figcaption></figure>
+      </div>
+
+      <div class="pnav">
+        <button type="button" data-open="zero"><span class="nlabel">回到开始 / Back to first</span><span class="ntitle">01 零号纪元：最后的觉醒</span></button>
+        <button class="pgohome" type="button" data-close>返回全部作品</button>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox" aria-hidden="true"><img src="assets/zero-poster.jpg" alt="放大预览"></div>
+
+<script>
+(function(){
+  'use strict';
+  var body=document.body,
+      viewer=document.getElementById('viewer'),
+      scroller=document.getElementById('viewerScroll'),
+      vtitle=document.getElementById('vtitle'),
+      lightbox=document.getElementById('lightbox'),
+      lbImg=lightbox.querySelector('img'),
+      progress=document.getElementById('progress'),
+      panels=Array.prototype.slice.call(document.querySelectorAll('.panel'));
+
+  /* 打开项目 */
+  function openProject(id){
+    var p=document.getElementById('p-'+id);
+    if(!p) return;
+    panels.forEach(function(x){ x.classList.remove('active'); });
+    p.classList.add('active');
+    viewer.classList.add('open');
+    body.classList.add('lock');
+    scroller.scrollTop=0;
+    vtitle.textContent=(p.getAttribute('data-idx')||'')+' — '+(p.getAttribute('data-title')||'');
+    if(history.replaceState) history.replaceState(null,'','#work-'+id);
+    pauseOutside(null);
+  }
+  function closeProject(){
+    viewer.classList.remove('open');
+    body.classList.remove('lock');
+    panels.forEach(function(x){ x.classList.remove('active'); });
+    pauseOutside(null);
+    if(history.replaceState) history.replaceState(null,'',location.pathname+location.search);
+  }
+  function pauseOutside(except){
+    document.querySelectorAll('video').forEach(function(v){
+      if(v!==except && !v.paused){ v.pause(); }
+    });
+  }
+
+  document.addEventListener('click',function(e){
+    var openBtn=e.target.closest('[data-open]');
+    if(openBtn){ e.preventDefault(); openProject(openBtn.getAttribute('data-open')); return; }
+    var closeBtn=e.target.closest('[data-close]');
+    if(closeBtn){ e.preventDefault(); closeProject(); }
+  });
+
+  /* 视频播放按钮 */
+  document.querySelectorAll('.media-frame').forEach(function(frame){
+    var v=frame.querySelector('video'), btn=frame.querySelector('.play');
+    if(!v||!btn) return;
+    btn.addEventListener('click',function(){
+      pauseOutside(v);
+      v.setAttribute('controls','');
+      var pr=v.play();
+      if(pr&&pr.catch) pr.catch(function(){});
+    });
+    v.addEventListener('play',function(){ frame.classList.add('playing'); frame.classList.add('started'); pauseOutside(v); });
+    v.addEventListener('pause',function(){ frame.classList.remove('playing'); });
+    v.addEventListener('ended',function(){ frame.classList.remove('playing'); });
+  });
+
+  /* 分镜镜头：封面 + 点击播放 */
+  document.querySelectorAll('.shot').forEach(function(fig){
+    var v=fig.querySelector('video'); if(!v) return;
+    var cap=fig.querySelector('figcaption span');
+    var label=cap?cap.textContent:'镜头';
+    var wrap=document.createElement('div'); wrap.className='shot-media';
+    v.parentNode.insertBefore(wrap,v); wrap.appendChild(v);
+    v.removeAttribute('controls');
+    var btn=document.createElement('button');
+    btn.type='button'; btn.className='shot-play';
+    btn.setAttribute('aria-label','播放 '+label);
+    btn.innerHTML='<i>▶</i>';
+    wrap.appendChild(btn);
+    btn.addEventListener('click',function(){
+      v.setAttribute('controls','');
+      pauseOutside(v);
+      var pr=v.play(); if(pr&&pr.catch){ pr.catch(function(){}); }
+    });
+    v.addEventListener('play',function(){ wrap.classList.add('playing'); wrap.classList.add('started'); pauseOutside(v); });
+    v.addEventListener('pause',function(){ wrap.classList.remove('playing'); });
+    v.addEventListener('ended',function(){ wrap.classList.remove('playing'); v.removeAttribute('controls'); });
+  });
+
+  /* 灯箱 */
+  document.querySelectorAll('img.zoom').forEach(function(img){
+    img.addEventListener('click',function(){
+      lbImg.src=img.currentSrc||img.src;
+      lbImg.alt=img.alt||'';
+      lightbox.classList.add('on');
+      body.classList.add('lock');
+    });
+  });
+  function closeLightbox(){
+    lightbox.classList.remove('on');
+    if(!viewer.classList.contains('open')) body.classList.remove('lock');
+  }
+  lightbox.addEventListener('click',closeLightbox);
+
+  /* 键盘 */
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){
+      if(lightbox.classList.contains('on')){ closeLightbox(); return; }
+      if(viewer.classList.contains('open')){ closeProject(); }
+    }
+  });
+
+  /* 进度条 */
+  function onScroll(){
+    var h=document.documentElement;
+    var max=h.scrollHeight-h.clientHeight;
+    var y=window.scrollY||h.scrollTop||0;
+    progress.style.width=(max>0?(y/max*100):0)+'%';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+
+  /* 滚动出现 */
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    },{rootMargin:'0px 0px -8% 0px',threshold:.08});
+    document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('[data-reveal]').forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* 直接带 hash 打开 */
+  var hash=location.hash||'';
+  if(hash.indexOf('#work-')===0){ openProject(hash.replace('#work-','')); }
+})();
+</script>
+</body>
+</html>
